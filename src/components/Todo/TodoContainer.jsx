@@ -38,7 +38,7 @@ function TodoContainer() {
   }, []);
 
   return (
-    <div className="mx-auto w-5/6 my-12 flex flex-col gap-y-4 md:w-4/6 lg:w-3/6 ">
+    <div className="mx-auto w-5/6 h-[76%] my-12 flex flex-col gap-y-4 overflow-y-auto scroll-m-0 md:w-4/6 lg:w-3/6 ">
       <TodoForm setText={setText} text={text} submitHandler={submitHandler} />
       {error && showBanner && <Banner message={error} color="red" />}
       {loading && !error && <LoadingSpinner />}
