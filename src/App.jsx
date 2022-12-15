@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import MainHeader from "./components/Layout/MainHeader";
 import { AuthContext } from "./context/auth-context";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
@@ -15,6 +16,8 @@ function App() {
       <Routes>
         {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
         {!isLoggedIn && <Route path="/signin" element={<SignIn />} />}
+        {isLoggedIn && <Route path="/home" element={<Home />} />}
+        {isLoggedIn && <Route path="/profile" element={<Profile />} />}
         {isLoggedIn && <Route path="/home" element={<Home />} />}
 
         <Route

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 
 function MainHeader() {
@@ -16,14 +16,18 @@ function MainHeader() {
     <header className=" bg-slate-600">
       <nav className="flex justify-between align-middle text-white py-2  px-4">
         <div className="text-lg font-bold py-2 px-4">React Todo</div>
-        {isLoggedIn && (
-          <button
-            className="bg-teal-700 py-2 px-4 rounded-md hover:bg-teal-600"
-            onClick={logOutHandler}
-          >
-            Log Out
-          </button>
-        )}
+        <div className="flex gap-3 items-center">
+          {isLoggedIn && <Link to="/home">Home</Link>}
+          {isLoggedIn && <Link to="/profile">Profile</Link>}
+          {isLoggedIn && (
+            <button
+              className="bg-teal-700 py-2 px-4 rounded-md hover:bg-teal-600"
+              onClick={logOutHandler}
+            >
+              Log Out
+            </button>
+          )}
+        </div>
       </nav>
     </header>
   );

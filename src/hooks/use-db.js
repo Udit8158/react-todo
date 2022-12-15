@@ -104,7 +104,6 @@ const useDb = () => {
       todos: filteredData,
     });
   };
-
   // Returng useful things
   return {
     todos: data,

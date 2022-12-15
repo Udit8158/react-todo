@@ -35,9 +35,11 @@ function SignIn() {
         setError(false);
         const user = userCredential.user;
         console.log(user);
-        authCtx.logIn(user.accessToken, user.uid); // Log in done
+        authCtx.logIn(user.accessToken, user.uid, user); // Log in done
         setLoading(false);
         setShowBanner(true);
+
+        // console.log(auth.currentUser);
 
         navigate("/home");
       })
