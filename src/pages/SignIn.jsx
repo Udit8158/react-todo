@@ -79,6 +79,7 @@ function SignIn() {
           type="password"
           placeholder="Enter your password"
           className="border-2 p-1 "
+          min={6}
           ref={passwordInputRef}
         />
         <button

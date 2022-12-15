@@ -3,7 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 
 function TodoForm({ submitHandler, text, setText }) {
   return (
-    <form className=" flex items-center  gap-3" onSubmit={submitHandler}>
+    <form className=" flex items-center gap-3" onSubmit={submitHandler}>
       <input
         type="text"
         placeholder="Enter your task"
