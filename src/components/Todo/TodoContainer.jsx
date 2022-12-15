@@ -3,7 +3,7 @@ import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
-import useFetch from "../../hooks/use-fetch";
+import useDb from "../../hooks/use-db";
 import Banner from "../UI/Banner";
 
 function TodoContainer() {
@@ -20,7 +20,7 @@ function TodoContainer() {
     deleteTodo,
     error,
     showBanner,
-  } = useFetch();
+  } = useDb();
 
   // console.log(todos);
 

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "../context/auth-context";
 import { db } from "../firebase";
-const useFetch = () => {
+const useDb = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -119,4 +119,4 @@ const useFetch = () => {
   };
 };
 
-export default useFetch;
+export default useDb;
