@@ -50,6 +50,7 @@ const useFetch = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
+        // update the collection in db when collection is allready created
         await updateDoc(docRef, {
           todos: [
             ...data,
@@ -57,6 +58,7 @@ const useFetch = () => {
           ],
         });
       } else {
+        // when creation of collection in db (for the first time)
         await setDoc(docRef, {
           todos: [
             ...data,

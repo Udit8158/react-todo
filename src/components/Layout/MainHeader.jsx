@@ -14,7 +14,7 @@ function MainHeader() {
   };
   return (
     <header className=" bg-slate-600">
-      <nav className="flex justify-between align-middle text-white  py-4 px-4">
+      <nav className="flex justify-between align-middle text-white py-2  px-4">
         <div className="text-lg font-bold py-2 px-4">React Todo</div>
         {isLoggedIn && (
           <button
