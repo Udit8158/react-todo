@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+   * PurgeCSS:
+   * bg-red-700
+   * bg-green-700
+
+   */
+
+.error {
+  background-color: rgb(241, 25, 25);
+}
+
+.success {
+  background-color: rgb(3, 156, 3);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
