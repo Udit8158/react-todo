@@ -42,7 +42,7 @@ const useDb = () => {
 
   // Funciton for setting and updating data
   const sendData = async (todoText) => {
-    console.log(data);
+    // console.log(data);
     try {
       // await getData();
       setLoading(true);
