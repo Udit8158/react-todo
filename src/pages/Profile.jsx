@@ -1,41 +1,56 @@
-import {
-  updateProfile,
-  updateEmail,
-  sendEmailVerification,
-  updatePassword,
-} from "firebase/auth";
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { updateProfile, updateEmail, updatePassword } from "firebase/auth";
+import React, { useState } from "react";
 import Banner from "../components/UI/Banner";
-import { AuthContext } from "../context/auth-context";
 import { auth } from "../firebase";
 
 function Profile() {
   const user = auth.currentUser;
   // console.log(user);
 
-  const [inputData, setInputData] = useState({});
-  const [error, setError] = useState(null);
-  const [showBanner, setShowBanner] = useState(false);
+  const [inputData, setInputData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const authCtx = useContext(AuthContext);
+  const [showBanner, setShowBanner] = useState({
+    state: false,
+    msg: "",
+    color: "",
+  });
 
-  const navigate = useNavigate();
+  const updateBanner = (state, msg, color) => {
+    setShowBanner({ state: state, msg: msg, color: color });
+  };
+
+  const updateLocalStorage = (user) => {
+    const localStorageData = JSON.parse(localStorage.getItem("react-todo-app"));
+    localStorage.setItem(
+      "react-todo-app",
+      JSON.stringify({ ...localStorageData, user })
+    );
+  };
 
   const updateNameHandler = () => {
     updateProfile(user, { displayName: inputData.name })
       .then(() => {
         console.log(user);
 
-        authCtx.logOut();
-        navigate("/signin");
-      })
-      .catch((e) => {
-        setError("Update Unsuccessful !");
-        setShowBanner(true);
+        updateLocalStorage(user);
+        updateBanner(true, "Successfully Update Your Name", "green");
+
+        setInputData((prev) => {
+          return { ...prev, name: "" };
+        });
 
         setTimeout(() => {
-          setShowBanner(false);
+          updateBanner(false, null, null);
+        }, 3000);
+      })
+      .catch((e) => {
+        updateBanner(true, "Error Occured", "red");
+        setTimeout(() => {
+          updateBanner(false, null, null);
         }, 3000);
         console.log(e);
       });
@@ -47,26 +62,24 @@ function Profile() {
       .then(() => {
         console.log(user);
 
-        authCtx.logOut();
-        navigate("/signin");
-      })
-      .catch((e) => {
-        setError("Update Unsuccessful !");
-        setShowBanner(true);
+        updateLocalStorage(user);
+        updateBanner(true, "Successfully Update Your Email", "green");
+
+        setInputData((prev) => {
+          return { ...prev, email: "" };
+        });
 
         setTimeout(() => {
-          setShowBanner(false);
+          updateBanner(false, null, null);
+        }, 3000);
+      })
+      .catch((e) => {
+        updateBanner(true, "Error Occured Please log out and try again", "red");
+        setTimeout(() => {
+          updateBanner(false, null, null);
         }, 3000);
         console.log(e);
       });
-  };
-
-  const verifyEmailHandler = () => {
-    sendEmailVerification(user).then(() => {
-      // Email verification sent!
-      // ...
-      console.log("email sent");
-    });
   };
 
   const passwordUpdateHandler = () => {
@@ -76,25 +89,35 @@ function Profile() {
       .then(() => {
         console.log(user);
 
-        authCtx.logOut();
-        navigate("/signin");
-      })
-      .catch((e) => {
-        setError("Update Unsuccessful !");
-        setShowBanner(true);
+        updateBanner(
+          true,
+          "Successfully Update Your Password. Please Log In Again",
+          "green"
+        );
+
+        setInputData((prev) => {
+          return { ...prev, password: "" };
+        });
 
         setTimeout(() => {
-          setShowBanner(false);
+          updateBanner(false, null, null);
         }, 3000);
+      })
+      .catch((e) => {
+        updateBanner(true, "Error Occured Please log out and try again", "red");
+        setTimeout(() => {
+          updateBanner(false, null, null);
+        }, 3000);
+
         console.log(e);
       });
   };
   return (
     <>
-      {showBanner && !error && (
-        <Banner message="Successfully updated" color="green" />
+      {showBanner.state && (
+        <Banner message={showBanner.msg} color={showBanner.color} />
       )}
-      {showBanner && error && <Banner message="Error Occured" color="red" />}
+      {/* {showBanner && error && <Banner message="Error Occured" color="red" />} */}
       <div className="mx-auto w-5/6  my-12 flex flex-col gap-y-4  md:w-4/6 lg:w-3/6 ">
         <h1 className="text-center text-xl text-white">Update Your Profile</h1>
 
@@ -103,6 +126,7 @@ function Profile() {
             type="name"
             placeholder="Enter Your Updated Name"
             className="border-2 p-1 w-3/6"
+            value={inputData.name}
             onChange={(e) => {
               setInputData((prev) => {
                 return { ...prev, name: e.target.value };
@@ -123,6 +147,7 @@ function Profile() {
             type="email"
             placeholder="Enter Your Updated Email"
             className="border-2 p-1 w-3/6"
+            value={inputData.email}
             onChange={(e) => {
               setInputData((prev) => {
                 return { ...prev, email: e.target.value };
@@ -136,20 +161,15 @@ function Profile() {
           >
             Update Email
           </button>
-          <button
-            className="bg-blue-600 p-2 text-white hover:bg-blue-500"
-            onClick={verifyEmailHandler}
-          >
-            Verify Email
-          </button>
         </div>
 
         <div className="flex gap-x-3 ">
           <input
             type="password"
             min={6}
-            placeholder="Enter Your Updated Name"
+            placeholder="Enter Your Updated Password"
             className="border-2 p-1 w-3/6"
+            value={inputData.password}
             onChange={(e) => {
               setInputData((prev) => {
                 return { ...prev, password: e.target.value };
